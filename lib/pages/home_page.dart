@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import './scan_page.dart';
+import './list_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,38 +11,55 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  String barcodeScanRes = '';
+  int paginaAtual = 0;
+  late PageController pc;
 
-  Future<void> scanBarcode() async {
-    barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-      "#ff6666",
-      "Cancelar",
-      true,
-      ScanMode.BARCODE,
-    );
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
-    setState(() => barcodeScanRes);
+    pc = PageController(initialPage: paginaAtual);
   }
 
+  setPaginaAtual(pagina) {
+    setState(() => paginaAtual = pagina);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Home Page"),
+      body: PageView(
+        controller: pc,
+        onPageChanged: setPaginaAtual,
+        children: const [
+          ScanPage(),
+          ListPage(),
+        ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FilledButton(
-              onPressed: scanBarcode,
-              child: const Text("BarCode Scanner"),
-            ),
-            Text(barcodeScanRes),
-          ],
-        ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: paginaAtual,
+        onDestinationSelected: (index) => setState(() {
+          paginaAtual = index;
+          pc.animateToPage(
+            paginaAtual,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.ease,
+          );
+        }),
+        animationDuration: const Duration(milliseconds: 400),
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.camera_alt_outlined),
+            selectedIcon: Icon(Icons.camera_alt),
+            label: "Scanear",
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.edit_outlined),
+            selectedIcon: Icon(Icons.edit),
+            label: "Lista",
+          ),
+        ],
       ),
     );
   }
