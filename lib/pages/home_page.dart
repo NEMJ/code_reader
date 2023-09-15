@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './scan_page.dart';
+import 'inventory_page.dart';
 import './list_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
         controller: pc,
         onPageChanged: setPaginaAtual,
         children: const [
-          ScanPage(),
+          InventoryPage(),
           ListPage(),
         ],
       ),
@@ -52,12 +52,12 @@ class _HomePageState extends State<HomePage> {
           NavigationDestination(
             icon: Icon(Icons.camera_alt_outlined),
             selectedIcon: Icon(Icons.camera_alt),
-            label: "Scanear",
+            label: "Criar",
           ),
           NavigationDestination(
             icon: Icon(Icons.edit_outlined),
             selectedIcon: Icon(Icons.edit),
-            label: "Lista",
+            label: "Inventários",
           ),
         ],
       ),
