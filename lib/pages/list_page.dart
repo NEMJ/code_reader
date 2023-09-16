@@ -11,9 +11,17 @@ class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("List Page"),
+      body: CustomScrollView(
+        slivers: [
+          const SliverAppBar.medium(
+            centerTitle: true,
+            pinned: true,
+            title: Text('Inventários'),
+          ),
+          SliverToBoxAdapter(
+            child: Container(height: 900, color: Colors.blueGrey[100])
+          )
+        ]
       ),
     );
   }

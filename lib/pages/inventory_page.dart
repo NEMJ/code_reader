@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import './inventory_detail_page.dart';
 
 class InventoryPage extends StatefulWidget {
   const InventoryPage({super.key});
@@ -10,18 +10,22 @@ class InventoryPage extends StatefulWidget {
 
 class _InventoryPageState extends State<InventoryPage> {
 
-  String barcodeScanRes = '';
+  TextEditingController titleController = TextEditingController();
 
-  Future<void> scanBarcode() async {
-    barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-      "#ff6666",
-      "Cancelar",
-      true,
-      ScanMode.BARCODE,
-    );
-
-    setState(() => barcodeScanRes);
+  navitarionToInventoryDetailPage() {
+    if(titleController.text != '') {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => InventoryDetailPage(title: titleController.text),
+        ),
+      ).then((value) {
+        titleController.text = '';
+      });
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,15 +48,22 @@ class _InventoryPageState extends State<InventoryPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        // onPressed: scanBarcode,
         onPressed: () => showDialog(
           context: context,
           builder: (_) => AlertDialog(
             title: const Text("Informe o nome do novo inventário"),
-            content: const TextField(
+            content: TextField(
+              onSubmitted: (value) => navitarionToInventoryDetailPage(),
+              controller: titleController,
               decoration: InputDecoration(
                 hintText: "Ex: Inventário de Janeiro",
-                border: InputBorder.none,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none,
+                ),
+                fillColor: Colors.white70,
+                filled: true,
               ),
             ),
             actionsAlignment: MainAxisAlignment.spaceAround,
@@ -62,11 +73,11 @@ class _InventoryPageState extends State<InventoryPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   backgroundColor: Colors.blueGrey[100],
                 ),
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).pop(),
                 child: const Text("Cancelar"),
               ),
               FilledButton(
-                onPressed: () {},
+                onPressed: navitarionToInventoryDetailPage,
                 child: const Text("Confirmar"),
               ),
             ],
