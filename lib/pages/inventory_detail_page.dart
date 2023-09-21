@@ -19,6 +19,7 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
   String barcodeScanRes = '';
   late FocusNode focusNode;
   late TextEditingController barcodeController;
+  List<String> codes = [];
 
   Future<void> scanBarcode() async {
     barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
@@ -27,8 +28,14 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
       true,
       ScanMode.BARCODE,
     );
+    
+    addCodeOnInventory(barcodeScanRes);
+  }
 
-    setState(() => barcodeController.text = '$barcodeScanRes\n');
+  addCodeOnInventory(String code) {
+    if(code != "-1") {
+      setState(() => codes.add(code));
+    }
   }
 
   @override
@@ -62,7 +69,11 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
               actions: [
                 IconButton(
                   onPressed: scanBarcode,
-                  icon: const Icon(Icons.camera_alt_rounded),
+                  icon: const Icon(Icons.camera_alt),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.save),
                 ),
               ],
             ),
@@ -79,14 +90,18 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
                   onSubmitted: (value) {
                     barcodeController.text = '';
                     FocusScope.of(context).requestFocus(focusNode); // Faz retornar o foco para o campo de texto
+                    addCodeOnInventory(value);
                   },
                 ),
               ),
             ),
             SliverList.builder(
-              itemCount: 20,
+              itemCount: codes.length,
               itemBuilder: (context, index) {
-                return InventoryItemWidget(index: index);
+                return InventoryItemWidget(
+                  code: codes[index],
+                  onPressed: () => setState(() => codes.removeAt(index)), // Função responsável pelo botão de ação do item
+                );
               }
             ),
           ],
