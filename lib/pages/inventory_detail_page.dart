@@ -1,3 +1,4 @@
+import 'package:code_reader/data/inventory_data.dart';
 import 'package:code_reader/widgets/inventory_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -20,6 +21,7 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
   late FocusNode focusNode;
   late TextEditingController barcodeController;
   List<String> codes = [];
+  late InventoryData inventoryData = InventoryData();
 
   Future<void> scanBarcode() async {
     barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
@@ -72,6 +74,7 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
                   icon: const Icon(Icons.camera_alt),
                 ),
                 IconButton(
+                  // onPressed: () => inventoryData.saveInventory(widget.title, codes), // A lista de códigos é salva no dispositivo
                   onPressed: () {},
                   icon: const Icon(Icons.save),
                 ),

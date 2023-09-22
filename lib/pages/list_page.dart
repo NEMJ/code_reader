@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../widgets/inventory_item_widget.dart';
+import '../data/inventory_data.dart';
+import '../models/inventory_model.dart';
 
 class ListPage extends StatefulWidget {
   const ListPage({super.key});
@@ -8,6 +11,29 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+  InventoryData inventoryData = InventoryData();
+  List<InventoryModel> inventories = [];
+
+  void getInventories() async {
+    inventories = await inventoryData.getInventories();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getInventories();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    inventories.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,9 +44,16 @@ class _ListPageState extends State<ListPage> {
             pinned: true,
             title: Text('Inventários'),
           ),
-          SliverToBoxAdapter(
-            child: Container(height: 900, color: Colors.blueGrey[100])
-          )
+          const SliverToBoxAdapter(child: SizedBox(height: 20)),
+          SliverList.builder(
+            itemCount: 1,
+            itemBuilder: (context, index) {
+              return InventoryItemWidget(
+                code: "Inventário",
+                onPressed: () {},
+              );
+            },
+          ),
         ]
       ),
     );
