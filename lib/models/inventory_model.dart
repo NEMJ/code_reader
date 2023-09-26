@@ -9,7 +9,7 @@ class InventoryModel {
       codes = json['codes'];
 
   String title;
-  List<String> codes;
+  List<dynamic> codes;
 
   Map<String, dynamic> toJson() {
     return {

@@ -16,6 +16,7 @@ class _ListPageState extends State<ListPage> {
 
   void getInventories() async {
     inventories = await inventoryData.getInventories();
+    setState(() {});
   }
 
   @override
