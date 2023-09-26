@@ -17,12 +17,15 @@ class InventoryData {
   }
 
   // Essa função seria para salvar apenas um inventário à lista de inventários
-  void saveInventory(String inventory, List<InventoryModel> inventories) async {
-    final String jsonString = json.encode(inventories);
-    shared.setString(inventoryListKey, jsonString); // Precisa alterar o salvamento para guardar um json contendo o inventário com os códigos
-  }
+  void saveInventory(InventoryModel inventory) async {
+    final List<InventoryModel> inventoryList = await getInventories();
+    inventoryList.add(inventory);
 
-  void saveInventoriesInDatabase() {}
+    final String inventories = jsonEncode(inventoryList);
+    shared.setString(inventoryListKey, inventories);
+    
+    // shared.setString(inventoryListKey, jsonString); // Precisa alterar o salvamento para guardar um json contendo o inventário com os códigos
+  }
 
   removeInventory(String index) async {
     SharedPreferences shared = await SharedPreferences.getInstance();

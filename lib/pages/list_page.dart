@@ -46,10 +46,10 @@ class _ListPageState extends State<ListPage> {
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverList.builder(
-            itemCount: 1,
+            itemCount: inventories.length,
             itemBuilder: (context, index) {
               return InventoryItemWidget(
-                code: "Inventário",
+                code: inventories[index].title,
                 onPressed: () {},
               );
             },
