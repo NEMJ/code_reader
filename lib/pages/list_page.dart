@@ -1,5 +1,5 @@
+import 'package:code_reader/widgets/inventory_widget.dart';
 import 'package:flutter/material.dart';
-import '../widgets/inventory_item_widget.dart';
 import '../data/inventory_data.dart';
 import '../models/inventory_model.dart';
 
@@ -49,10 +49,18 @@ class _ListPageState extends State<ListPage> {
           SliverList.builder(
             itemCount: inventories.length,
             itemBuilder: (context, index) {
-              return InventoryItemWidget(
-                code: inventories[index].title,
-                onPressed: () {},
+              return InventoryWidget(
+                title: inventories[index].title,
+                buttonOnPressed: () {
+                  // inventoryData.removeInventory(inventories[index].title);
+                  print("Inventário ${inventories[index].title} será removido");
+                  setState(() {});
+                },
               );
+              // return InventoryItemWidget(
+              //   code: inventories[index].title,
+              //   onPressed: () {},
+              // );
             },
           ),
         ]
