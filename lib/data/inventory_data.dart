@@ -27,9 +27,12 @@ class InventoryData {
     // shared.setString(inventoryListKey, jsonString); // Precisa alterar o salvamento para guardar um json contendo o inventário com os códigos
   }
 
-  removeInventory(String index) async {
-    SharedPreferences shared = await SharedPreferences.getInstance();
-
-    shared.remove(index);
+  void removeInventory(String inventory) async {
+    final List<InventoryModel> inventoryList = await getInventories();
+    var result = inventoryList.indexWhere((e) => e.title == inventory);
+    inventoryList.removeAt(result);
+    
+    final String inventories = jsonEncode(inventoryList);
+    shared.setString(inventoryListKey, inventories);
   }
 }

@@ -27,7 +27,9 @@ class _InventoryWidgetState extends State<InventoryWidget> {
         ),
         trailing: IconButton(
           onPressed: (widget.buttonOnPressed != null) ? widget.buttonOnPressed : () {},
-          icon: const Icon(Icons.more_vert),
+          // icon: const Icon(Icons.more_vert),
+          icon: const Icon(Icons.cancel_outlined),
+          color: Colors.red,
           iconSize: 20,
         ),
         contentPadding: const EdgeInsets.only(left: 14, right: 8),
