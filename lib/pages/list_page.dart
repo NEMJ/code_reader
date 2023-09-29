@@ -52,16 +52,11 @@ class _ListPageState extends State<ListPage> {
               return InventoryWidget(
                 title: inventories[index].title,
                 buttonOnPressed: () {
-                  inventoryData.removeInventory(inventories[index].title);
+                  // inventoryData.removeInventory(inventories[index].title);
                   getInventories();
-                  // print("Inventário ${inventories[index].title} será removido");
                   setState(() {});
                 },
               );
-              // return InventoryItemWidget(
-              //   code: inventories[index].title,
-              //   onPressed: () {},
-              // );
             },
           ),
         ]
