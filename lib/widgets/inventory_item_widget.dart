@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class InventoryItemWidget extends StatefulWidget {
   const InventoryItemWidget({
     super.key,
-    required this.code,
+    required this.title,
     this.onPressed,
   });
 
-  final String code;
+  final String title;
   final void Function()? onPressed;
 
   @override
@@ -20,7 +20,7 @@ class _InventoryItemWidgetState extends State<InventoryItemWidget> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: ListTile(
-        title: Text(widget.code),
+        title: Text(widget.title),
         tileColor: Colors.blueGrey[50],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -32,7 +32,7 @@ class _InventoryItemWidgetState extends State<InventoryItemWidget> {
           icon: const Icon(Icons.delete),
         ),
         contentPadding: const EdgeInsets.only(left: 14, right: 8),
-        onTap: () => print("Item ${widget.code} Clicado"),
+        onTap: () => print("Item ${widget.title} Clicado"),
       ),
     );
   }

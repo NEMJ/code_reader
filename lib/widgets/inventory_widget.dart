@@ -9,7 +9,7 @@ class InventoryWidget extends StatefulWidget {
   });
 
   final String title;
-  final VoidCallback? buttonOnPressed;
+  final Function(BuildContext)? buttonOnPressed;
 
   @override
   State<InventoryWidget> createState() => _InventoryWidgetState();
@@ -26,7 +26,7 @@ class _InventoryWidgetState extends State<InventoryWidget> {
           motion: const StretchMotion(),
           children: [
             SlidableAction(
-              onPressed: (context) {},
+              onPressed: widget.buttonOnPressed,
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
               icon: Icons.delete_rounded,

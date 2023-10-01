@@ -37,7 +37,7 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
   }
 
   addCodeOnInventory(String code) {
-    if(code != "-1") {
+    if(code != "-1" && code != '') {
       setState(() => codes.add(code));
     }
   }
@@ -76,7 +76,6 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
                   icon: const Icon(Icons.camera_alt),
                 ),
                 IconButton(
-                  // onPressed: () => inventoryData.saveInventory(widget.title, codes), // A lista de códigos é salva no dispositivo
                   onPressed: () => inventoryData.saveInventory(
                     InventoryModel(
                       title: widget.title,
@@ -109,7 +108,7 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
               itemCount: codes.length,
               itemBuilder: (context, index) {
                 return InventoryItemWidget(
-                  code: codes[index],
+                  title: codes[index],
                   onPressed: () => setState(() => codes.removeAt(index)), // Função responsável pelo botão de ação do item
                 );
               }
