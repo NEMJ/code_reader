@@ -7,10 +7,12 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 class InventoryDetailPage extends StatefulWidget {
   const InventoryDetailPage({
     super.key,
-    required this.title,
+    required this.inventory,
+    this.index,
   });
 
-  final String title;
+  final InventoryModel inventory;
+  final int? index;
 
   @override
   State<InventoryDetailPage> createState() => _InventoryDetailPageState();
@@ -21,7 +23,6 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
   String barcodeScanRes = '';
   late FocusNode focusNode;
   late TextEditingController barcodeController;
-  List<String> codes = [];
   late InventoryData inventoryData = InventoryData();
   late List<InventoryModel> inventoriesList;
 
@@ -38,7 +39,7 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
 
   addCodeOnInventory(String code) {
     if(code != "-1" && code != '') {
-      setState(() => codes.add(code));
+      setState(() => widget.inventory.codes.add(code));
     }
   }
 
@@ -69,19 +70,14 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
           slivers: [
             SliverAppBar.medium(
               centerTitle: true,
-              title: Text(widget.title),
+              title: Text(widget.inventory.title),
               actions: [
                 IconButton(
                   onPressed: scanBarcode,
                   icon: const Icon(Icons.camera_alt),
                 ),
                 IconButton(
-                  onPressed: () => inventoryData.saveInventory(
-                    InventoryModel(
-                      title: widget.title,
-                      codes: codes,
-                    ),
-                  ),
+                  onPressed: () => inventoryData.saveInventory(widget.inventory, widget.index),
                   icon: const Icon(Icons.save),
                 ),
               ],
@@ -105,11 +101,11 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
               ),
             ),
             SliverList.builder(
-              itemCount: codes.length,
+              itemCount: widget.inventory.codes.length,
               itemBuilder: (context, index) {
                 return InventoryItemWidget(
-                  title: codes[index],
-                  onPressed: () => setState(() => codes.removeAt(index)), // Função responsável pelo botão de ação do item
+                  title: widget.inventory.codes[index],
+                  onPressed: () => setState(() => widget.inventory.codes.removeAt(index)), // Função responsável pelo botão de ação do item
                 );
               }
             ),

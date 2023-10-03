@@ -1,3 +1,4 @@
+import 'package:code_reader/pages/inventory_detail_page.dart';
 import 'package:code_reader/widgets/inventory_widget.dart';
 import 'package:flutter/material.dart';
 import '../data/inventory_data.dart';
@@ -51,11 +52,22 @@ class _ListPageState extends State<ListPage> {
             itemBuilder: (context, index) {
               return InventoryWidget(
                 title: inventories[index].title,
-                buttonOnPressed: (context) {
+                actionButtonOnPressed: (context) {
                   inventoryData.removeInventory(inventories[index].title);
                   getInventories();
                   setState(() {});
                 },
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => InventoryDetailPage(
+                        inventory: inventories[index],
+                        index: index,
+                      ),
+                    )
+                  );
+                }
               );
             },
           ),

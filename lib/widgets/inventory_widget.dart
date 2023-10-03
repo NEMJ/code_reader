@@ -5,11 +5,13 @@ class InventoryWidget extends StatefulWidget {
   const InventoryWidget({
     super.key,
     required this.title,
-    this.buttonOnPressed,
+    this.actionButtonOnPressed,
+    this.onTap,
   });
 
   final String title;
-  final Function(BuildContext)? buttonOnPressed;
+  final Function(BuildContext)? actionButtonOnPressed;
+  final Function()? onTap;
 
   @override
   State<InventoryWidget> createState() => _InventoryWidgetState();
@@ -26,7 +28,7 @@ class _InventoryWidgetState extends State<InventoryWidget> {
           motion: const StretchMotion(),
           children: [
             SlidableAction(
-              onPressed: widget.buttonOnPressed,
+              onPressed: widget.actionButtonOnPressed,
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
               icon: Icons.delete_rounded,
@@ -41,7 +43,7 @@ class _InventoryWidgetState extends State<InventoryWidget> {
             borderRadius: BorderRadius.circular(8),
           ),
           contentPadding: const EdgeInsets.only(left: 14, right: 8),
-          onTap: () => print("Inventário ${widget.title} Clicado"),
+          onTap: widget.onTap,
         ),
       ),
     );

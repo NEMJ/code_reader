@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './inventory_detail_page.dart';
+import '../models/inventory_model.dart';
 
 class InventoryPage extends StatefulWidget {
   const InventoryPage({super.key});
@@ -18,7 +19,9 @@ class _InventoryPageState extends State<InventoryPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => InventoryDetailPage(title: titleController.text),
+          builder: (_) => InventoryDetailPage(
+            inventory: InventoryModel(title: titleController.text, codes: []),
+          ),
         ),
       ).then((value) {
         titleController.text = '';
