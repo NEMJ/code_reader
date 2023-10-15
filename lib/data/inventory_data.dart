@@ -16,6 +16,11 @@ class InventoryData {
     return jsonDecoded.map((e) => InventoryModel.fromJson(e)).toList(); // converte a lista de objetos para uma lista de Inventários e retorna
   }
 
+  Future<bool> containsInventory(String inventoryTitle) async {
+    final List<InventoryModel> inventories = await getInventories();
+    return inventories.any((inventory) => inventory.title == inventoryTitle);
+  }
+
   // Essa função seria para salvar apenas um inventário à lista de inventários
   void saveInventory(InventoryModel inventory, int? index) async {
     final List<InventoryModel> inventoryList = await getInventories();
@@ -29,9 +34,7 @@ class InventoryData {
     }
 
     final String inventories = jsonEncode(inventoryList);
-      shared.setString(inventoryListKey, inventories);
-    
-    // shared.setString(inventoryListKey, jsonString); // Precisa alterar o salvamento para guardar um json contendo o inventário com os códigos
+    shared.setString(inventoryListKey, inventories);
   }
 
   void removeInventory(String inventory) async {

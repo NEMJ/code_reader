@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../data/inventory_data.dart';
 import './inventory_detail_page.dart';
 import '../models/inventory_model.dart';
 
@@ -12,8 +13,14 @@ class InventoryPage extends StatefulWidget {
 class _InventoryPageState extends State<InventoryPage> {
 
   TextEditingController titleController = TextEditingController();
+  late List<InventoryModel> listInventories;
+  InventoryData inventoryData = InventoryData();
 
-  navitarionToInventoryDetailPage() {
+  getInventories() async {
+    listInventories = await inventoryData.getInventories();
+  }
+
+  navigationToInventoryDetailPage() {
     if(titleController.text != '') {
       Navigator.of(context).pop();
       Navigator.push(
@@ -27,6 +34,28 @@ class _InventoryPageState extends State<InventoryPage> {
         titleController.text = '';
       });
     }
+  }
+
+  onCreateInventory() {
+    if (listInventories.any((inv) => inv.title == titleController.text)) {
+      Navigator.of(context).pop();
+      titleController.text = "";
+
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Este nome de inventário já existe!"),
+        ),
+      );
+    } else {
+      navigationToInventoryDetailPage();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getInventories();
   }
 
   @override
@@ -56,7 +85,7 @@ class _InventoryPageState extends State<InventoryPage> {
           builder: (_) => AlertDialog(
             title: const Text("Informe o nome do novo inventário"),
             content: TextField(
-              onSubmitted: (value) => navitarionToInventoryDetailPage(),
+              onSubmitted: (value) => onCreateInventory(),
               controller: titleController,
               decoration: InputDecoration(
                 hintText: "Ex: Inventário de Janeiro",
@@ -80,7 +109,7 @@ class _InventoryPageState extends State<InventoryPage> {
                 child: const Text("Cancelar"),
               ),
               FilledButton(
-                onPressed: navitarionToInventoryDetailPage,
+                onPressed: onCreateInventory,
                 child: const Text("Confirmar"),
               ),
             ],

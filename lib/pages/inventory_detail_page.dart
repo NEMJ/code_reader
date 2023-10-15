@@ -45,7 +45,6 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     focusNode = FocusNode();
     barcodeController = TextEditingController();
 
@@ -54,7 +53,6 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     focusNode.dispose();
     barcodeController.dispose();
 
@@ -77,7 +75,31 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
                   icon: const Icon(Icons.camera_alt),
                 ),
                 IconButton(
-                  onPressed: () => inventoryData.saveInventory(widget.inventory, widget.index),
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text("Deseja salvar o inventário?"),
+                      actionsAlignment: MainAxisAlignment.spaceEvenly,
+                      actions: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            backgroundColor: Colors.blueGrey[100],
+                          ),
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text("Cancelar"),
+                        ),
+                        FilledButton(
+                          onPressed: () {
+                            inventoryData.saveInventory(widget.inventory, widget.index);
+                            Navigator.of(context).pop(); // Sai do AlertDialog para a tela que o invocou
+                            Navigator.of(context).pop(); // Sai da tela inventory_detail_page para a tela que a invocou
+                          },
+                          child: const Text("Salvar"),
+                        ),
+                      ],
+                    ),
+                  ),
                   icon: const Icon(Icons.save),
                 ),
               ],
