@@ -38,6 +38,7 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   shared_preferences: ^2.2.1
   flutter_slidable: ^3.0.0
+  share_extend: ^2.0.0
 
 dev_dependencies:
   flutter_test:

@@ -51,7 +51,7 @@ class _ListPageState extends State<ListPage> {
             itemCount: inventories.length,
             itemBuilder: (context, index) {
               return InventoryWidget(
-                title: inventories[index].title,
+                inventory: inventories[index],
                 actionButtonOnPressed: (context) {
                   inventoryData.removeInventory(inventories[index].title);
                   getInventories();
@@ -66,7 +66,7 @@ class _ListPageState extends State<ListPage> {
                         index: index,
                       ),
                     )
-                  );
+                  ).then((value) => setState(() {})); // atualiza a contagem de códigos do inventário
                 }
               );
             },
