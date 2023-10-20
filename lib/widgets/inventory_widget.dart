@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import '../models/inventory_model.dart';
 import 'package:share_extend/share_extend.dart';
+import 'package:path_provider/path_provider.dart';
+import '../models/inventory_model.dart';
 
 class InventoryWidget extends StatefulWidget {
   const InventoryWidget({
@@ -21,8 +23,19 @@ class InventoryWidget extends StatefulWidget {
 
 class _InventoryWidgetState extends State<InventoryWidget> {
 
-  void share(BuildContext context) {
-    ShareExtend.share("share text", "text", subject: "Teste", extraText: "testando");
+  void share(BuildContext context) async {
+    Directory dir = await getApplicationDocumentsDirectory();
+    String path = dir.path;
+    String filePath = "$path/inventátio.txt";
+
+    File file = File(filePath);
+
+    file.writeAsString(
+      "Inventário: ${widget.inventory.title}\n\n${widget.inventory.codes}",
+      flush: true,
+    );
+    
+    ShareExtend.share(filePath, "file");
   }
 
   @override
