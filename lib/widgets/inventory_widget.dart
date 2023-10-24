@@ -26,14 +26,11 @@ class _InventoryWidgetState extends State<InventoryWidget> {
   void share(BuildContext context) async {
     Directory dir = await getApplicationDocumentsDirectory();
     String path = dir.path;
-    String filePath = "$path/inventátio.txt";
+    String filePath = "$path/${widget.inventory.title}.txt";
 
     File file = File(filePath);
 
-    file.writeAsString(
-      "Inventário: ${widget.inventory.title}\n\n${widget.inventory.codes}",
-      flush: true,
-    );
+    file.writeAsString(widget.inventory.codes.join('\n')); // Envia a lista como uma String única, separando os elementos por Enter
     
     ShareExtend.share(filePath, "file");
   }
