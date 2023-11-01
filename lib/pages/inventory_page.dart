@@ -61,23 +61,18 @@ class _InventoryPageState extends State<InventoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Image.asset('assets/barcode.png'),
-              const Text(
-                "Vamos criar um novo inventário?",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18,
-                ),
-              ),
-            ],
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Image.asset('assets/JRTi_Logo.png'),
+          const Text(
+            "Vamos criar um novo inventário?",
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 18,
+            ),
           ),
-        ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => showDialog(
