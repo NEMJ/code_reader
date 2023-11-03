@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './inventory_page.dart';
 import './list_page.dart';
+import './about_us_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,7 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  int paginaAtual = 0;
+  int paginaAtual = 1;
   late PageController pc;
 
   @override
@@ -33,6 +34,7 @@ class _HomePageState extends State<HomePage> {
         controller: pc,
         onPageChanged: setPaginaAtual,
         children: const [
+          AboutUsPage(),
           InventoryPage(),
           ListPage(),
         ],
@@ -49,6 +51,11 @@ class _HomePageState extends State<HomePage> {
         }),
         animationDuration: const Duration(milliseconds: 400),
         destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.info_outline),
+            selectedIcon: Icon(Icons.info),
+            label: "Sobre Nós"
+          ),
           NavigationDestination(
             icon: Icon(Icons.camera_alt_outlined),
             selectedIcon: Icon(Icons.camera_alt),
