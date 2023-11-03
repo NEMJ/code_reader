@@ -35,6 +35,25 @@ class _InventoryWidgetState extends State<InventoryWidget> {
     ShareExtend.share(filePath, "file");
   }
 
+  // É mostrado um Dialog cado o inventário ainda não foi compartilhado
+  // Após o primeiro compartilhamento, ele é fechado para edições
+  shareDialog(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Deseja realmente compartilhar este arquivo?'),
+      content: const Text('Após o envio do relatório não será mais possível editá-lo.'),
+      actions: [
+        FilledButton(
+          child: const Text('Compartilhar'),
+          onPressed: () {
+            widget.inventory.inventoryClosed = true;
+            Navigator.of(context).pop();
+            share(context);
+          },
+        ),
+      ]
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -54,7 +73,12 @@ class _InventoryWidgetState extends State<InventoryWidget> {
             ),
             SlidableAction(
               padding: EdgeInsets.zero,
-              onPressed: share,
+              onPressed: (widget.inventory.inventoryClosed)
+              ? share
+              : (context) => showDialog(
+                context: context,
+                builder: (context) => shareDialog(context),
+              ),
               backgroundColor: Colors.blue,
               foregroundColor: Colors.white,
               icon: Icons.share,

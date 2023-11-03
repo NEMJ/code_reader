@@ -6,13 +6,8 @@ class AboutUsPage extends StatelessWidget {
 
   _launchURL() async {
     Uri _url = Uri.parse('https://www.jrtisistemas.com.br');
-
-    if (await launchUrl(_url)) {
-      await launchUrl(_url);
-      return;
-    } else {
-      throw 'Cold not launch $_url';
-    }
+    
+    await launchUrl(_url);
   }
 
   @override

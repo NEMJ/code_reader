@@ -20,6 +20,21 @@ class _ListPageState extends State<ListPage> {
     setState(() {});
   }
 
+  dialogInventoryClosed(BuildContext context) {
+    return AlertDialog(
+      content: const Text('O inventário não pode mais ser editado', style: TextStyle(fontSize: 18)),
+      contentPadding: const EdgeInsets.fromLTRB(20, 40, 20, 10),
+      actions: [
+        FilledButton(
+          child: const Text('OK'),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ],
+    );
+  }
+
+  dialogShareInventory(BuildContext context) {}
+
   @override
   void initState() {
     // TODO: implement initState
@@ -57,16 +72,23 @@ class _ListPageState extends State<ListPage> {
                   getInventories();
                   setState(() {});
                 },
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => InventoryDetailPage(
-                        inventory: inventories[index],
-                        index: index,
-                      ),
-                    )
-                  ).then((value) => setState(() {})); // atualiza a contagem de códigos do inventário
+                onTap: () { // Se o inventário já tiver sido enviado, ele não pode mais ser editado
+                  if (inventories[index].inventoryClosed == false) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => InventoryDetailPage(
+                          inventory: inventories[index],
+                          index: index,
+                        ),
+                      )
+                    ).then((value) => setState(() {})); // atualiza a contagem de códigos do inventário
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (context) => dialogInventoryClosed(context),
+                    );
+                  }
                 }
               );
             },
