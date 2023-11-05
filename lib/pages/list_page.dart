@@ -66,6 +66,7 @@ class _ListPageState extends State<ListPage> {
             itemCount: inventories.length,
             itemBuilder: (context, index) {
               return InventoryWidget(
+                index: index,
                 inventory: inventories[index],
                 actionButtonOnPressed: (context) {
                   inventoryData.removeInventory(inventories[index].title);

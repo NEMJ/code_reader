@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:path_provider/path_provider.dart';
 import '../models/inventory_model.dart';
+import '../data/inventory_data.dart';
 
 class InventoryWidget extends StatefulWidget {
   const InventoryWidget({
@@ -11,17 +12,21 @@ class InventoryWidget extends StatefulWidget {
     required this.inventory,
     this.actionButtonOnPressed,
     this.onTap,
+    this.index,
   });
 
   final InventoryModel inventory;
   final Function(BuildContext)? actionButtonOnPressed;
   final Function()? onTap;
+  final int? index;
 
   @override
   State<InventoryWidget> createState() => _InventoryWidgetState();
 }
 
 class _InventoryWidgetState extends State<InventoryWidget> {
+
+  final inventoryData = InventoryData();
 
   void share(BuildContext context) async {
     Directory dir = await getApplicationDocumentsDirectory();
@@ -46,6 +51,7 @@ class _InventoryWidgetState extends State<InventoryWidget> {
           child: const Text('Compartilhar'),
           onPressed: () {
             widget.inventory.inventoryClosed = true;
+            inventoryData.saveInventory(widget.inventory, widget.index);
             Navigator.of(context).pop();
             share(context);
           },
