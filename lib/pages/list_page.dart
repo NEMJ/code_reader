@@ -33,7 +33,24 @@ class _ListPageState extends State<ListPage> {
     );
   }
 
-  dialogShareInventory(BuildContext context) {}
+  // É mostrado um Dialog cado o inventário ainda não foi compartilhado
+  // Após o primeiro compartilhamento, ele é fechado para edições
+  dialogShareInventory(BuildContext context, InventoryModel inventory, int index) {
+    return AlertDialog(
+      title: const Text('Deseja realmente compartilhar este arquivo?'),
+      content: const Text('Após o envio do relatório não será mais possível editá-lo.'),
+      actions: [
+        FilledButton(
+          child: const Text('Compartilhar'),
+          onPressed: () {
+            inventory.inventoryClosed = true;
+            inventoryData.saveInventory(inventory, index);
+            Navigator.of(context).pop();
+          },
+        ),
+      ]
+    );
+  }
 
   @override
   void initState() {
@@ -68,11 +85,12 @@ class _ListPageState extends State<ListPage> {
               return InventoryWidget(
                 index: index,
                 inventory: inventories[index],
-                actionButtonOnPressed: (context) {
+                onDelete: (context) {
                   inventoryData.removeInventory(inventories[index].title);
                   getInventories();
                   setState(() {});
                 },
+                onShare: dialogShareInventory(context, inventories[index], index),
                 onTap: () { // Se o inventário já tiver sido enviado, ele não pode mais ser editado
                   if (inventories[index].inventoryClosed == false) {
                     Navigator.push(
