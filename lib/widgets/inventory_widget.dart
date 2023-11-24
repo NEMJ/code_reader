@@ -10,16 +10,14 @@ class InventoryWidget extends StatefulWidget {
   const InventoryWidget({
     super.key,
     required this.inventory,
-    required this.onDelete,
-    required this.onShare,
-    required this.onTap,
+    this.actionButtonOnPressed,
+    this.onTap,
     this.index,
   });
 
   final InventoryModel inventory;
-  final Function(BuildContext) onDelete;
-  final Function(BuildContext) onShare;
-  final Function() onTap;
+  final Function(BuildContext)? actionButtonOnPressed;
+  final Function()? onTap;
   final int? index;
 
   @override
@@ -42,6 +40,26 @@ class _InventoryWidgetState extends State<InventoryWidget> {
     ShareExtend.share(filePath, "file");
   }
 
+  // É mostrado um Dialog cado o inventário ainda não foi compartilhado
+  // Após o primeiro compartilhamento, ele é fechado para edições
+  shareDialog(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Deseja realmente compartilhar este arquivo?'),
+      content: const Text('Após o envio do relatório não será mais possível editá-lo.'),
+      actions: [
+        FilledButton(
+          child: const Text('Compartilhar'),
+          onPressed: () {
+            widget.inventory.inventoryClosed = true;
+            inventoryData.saveInventory(widget.inventory, widget.index);
+            Navigator.of(context).pop();
+            share(context);
+          },
+        ),
+      ]
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -53,7 +71,7 @@ class _InventoryWidgetState extends State<InventoryWidget> {
           children: [
             SlidableAction(
               padding: EdgeInsets.zero,
-              onPressed: widget.onDelete,
+              onPressed: widget.actionButtonOnPressed,
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
               icon: Icons.delete_rounded,
@@ -63,10 +81,10 @@ class _InventoryWidgetState extends State<InventoryWidget> {
               padding: EdgeInsets.zero,
               onPressed: (widget.inventory.inventoryClosed)
               ? share
-              : (context) {
-                widget.onShare(context);
-                share(context);
-              },
+              : (context) => showDialog(
+                context: context,
+                builder: (context) => shareDialog(context),
+              ),
               backgroundColor: Colors.blue,
               foregroundColor: Colors.white,
               icon: Icons.share,
