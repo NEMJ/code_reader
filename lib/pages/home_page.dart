@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
           NavigationDestination(
             icon: Icon(Icons.edit_outlined),
             selectedIcon: Icon(Icons.edit),
-            label: "Inventários",
+            label: "Coletas",
           ),
         ],
       ),

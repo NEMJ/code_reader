@@ -44,7 +44,7 @@ class _InventoryPageState extends State<InventoryPage> {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Este nome de inventário já existe!"),
+          content: Text("Este nome de coleta já existe!"),
         ),
       );
     } else {
@@ -66,7 +66,7 @@ class _InventoryPageState extends State<InventoryPage> {
         children: [
           Image.asset('assets/JRTi_Logo.png'),
           const Text(
-            "Vamos criar um novo inventário?",
+            "Vamos cadastrar uma nova coleta?",
             style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 18,
@@ -78,12 +78,12 @@ class _InventoryPageState extends State<InventoryPage> {
         onPressed: () => showDialog(
           context: context,
           builder: (_) => AlertDialog(
-            title: const Text("Informe o nome do novo inventário"),
+            title: const Text("Informe o nome da nova coleta"),
             content: TextField(
               onSubmitted: (value) => onCreateInventory(),
               controller: titleController,
               decoration: InputDecoration(
-                hintText: "Ex: Inventário de Janeiro",
+                hintText: "Ex: Coleta de Janeiro",
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),

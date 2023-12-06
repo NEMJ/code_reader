@@ -22,7 +22,7 @@ class _ListPageState extends State<ListPage> {
 
   dialogInventoryClosed(BuildContext context) {
     return AlertDialog(
-      content: const Text('O inventário não pode mais ser editado', style: TextStyle(fontSize: 18)),
+      content: const Text('A coleta não pode mais ser editada', style: TextStyle(fontSize: 18)),
       contentPadding: const EdgeInsets.fromLTRB(20, 40, 20, 10),
       actions: [
         FilledButton(
@@ -59,7 +59,7 @@ class _ListPageState extends State<ListPage> {
           const SliverAppBar.medium(
             centerTitle: true,
             pinned: true,
-            title: Text('Inventários'),
+            title: Text('Coletas'),
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverList.builder(

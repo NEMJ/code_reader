@@ -78,7 +78,7 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
                   onPressed: () => showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: const Text("Deseja salvar o inventário?"),
+                      title: const Text("Deseja salvar a coleta?"),
                       actionsAlignment: MainAxisAlignment.spaceEvenly,
                       actions: [
                         TextButton(
